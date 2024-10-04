@@ -4,6 +4,17 @@ import launch
 from launch_ros.actions import Node
 from launch.actions import LogInfo, Shutdown
 
+# Written by ChatGPT. Ugly but works.
+shutdown_initiated = False
+def shutdown(context):
+    global shutdown_initiated
+    if not shutdown_initiated:
+        shutdown_initiated = True
+        return [
+            LogInfo(msg = ["A node has died. Stopping everything..."]),
+            Shutdown(reason='Shutting down because of node termination.')
+        ]
+
 def generate_launch_description():
 
     Actuator = Node(
@@ -76,11 +87,13 @@ def generate_launch_description():
         Actuator, Battery, Odometry, Ultrasonic,
         uss_side_left_tf, uss_rear_left_tf, uss_rear_center_tf, uss_rear_right_tf, uss_side_right_tf
         ])
+
+    # Stop everything if one node crashes
+    # also relevant: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Using-Event-Handlers.html
     ld.add_action(launch.actions.RegisterEventHandler(
         event_handler = launch.event_handlers.OnProcessExit(
             on_exit = [
-                LogInfo(msg = ["A node has died. Stopping everything..."]),
-                Shutdown(reason='Shutting down because of node termination.')
+                launch.actions.OpaqueFunction(function=shutdown)
             ]
         )
     ))
