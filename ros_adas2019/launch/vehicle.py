@@ -18,11 +18,15 @@ def generate_launch_description():
         name = 'rplidar',
         namespace = 'lidar',
         package = 'rplidar_ros',
-        executable = 'rplidar_composition',
-        parameters = [
-            {'frame_id': 'laser_frame'},
-            {'angle_compensate': True}
-        ],
+        executable = 'rplidar_node',
+        parameters = [{
+            'frame_id': 'laser_frame',
+            'angle_compensate': True,
+            'scan_mode': 'Express',
+            'channel_type': 'serial',
+            'serial_port': '/dev/ttyUSB0',
+            'serial_baudrate': 115200,
+        }],
         output = 'screen'
     )
     laser_tf = Node(

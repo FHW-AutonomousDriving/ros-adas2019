@@ -1,9 +1,9 @@
 [submodule "pylon_usb-instant-camera"]
 	path = pylon_usb-instant-camera
 	url = https://github.com/fhwedel-hoe/pylon_usb-instant-camera.git
-[submodule "rplidar"]
-	path = rplidar
-	url = https://github.com/allenh1/rplidar_ros.git
 [submodule "pylon_instant_camera"]
 	path = pylon_instant_camera
 	url = https://github.com/fhwedel-hoe/pylon_instant_camera.git
+[submodule "rplidar_ros"]
+	path = rplidar_ros
+	url = https://github.com/Slamtec/rplidar_ros.git
